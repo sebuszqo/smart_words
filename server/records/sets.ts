@@ -31,11 +31,10 @@ interface Word {
 }
 
 interface Set extends Document {
-  __v: number;
   _id: string;
   name: string;
   description: string;
-  createdAt: string;
+  createdAt: Date;
   words: Word[];
 }
 
@@ -43,9 +42,8 @@ export class SetRecord implements ISetWithWords {
   public _id?: string;
   public description: string;
   public name: string;
-  public createdAt: string;
+  public createdAt: Date;
   public words: IWords[];
-  public __v: number;
 
   constructor(obj: Set) {
     if (!obj.name || obj.name.length > 100) {
@@ -65,7 +63,6 @@ export class SetRecord implements ISetWithWords {
     this.description = !obj.description ? null : obj.description;
     this.createdAt = obj.createdAt;
     this.words = obj.words;
-    this.__v = obj.__v;
   }
 
   static async findOne(id: string): Promise<SetRecord | null> {
