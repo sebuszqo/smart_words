@@ -35,7 +35,7 @@ interface Set extends Document {
   _id: string;
   name: string;
   description: string;
-  createdAt: string;
+  createdAt: Date;
   words: Word[];
 }
 
@@ -43,7 +43,7 @@ export class SetRecord implements ISetWithWords {
   public _id?: string;
   public description: string;
   public name: string;
-  public createdAt: string;
+  public createdAt: Date;
   public words: IWords[];
   public __v: number;
 
@@ -76,10 +76,19 @@ export class SetRecord implements ISetWithWords {
       return null;
     }
   }
-  static async findAll(): Promise<SetRecord[] | null> {
+  static async findAll(name?: string): Promise<SetRecord[] | null> {
     try {
-      const result = await WordSet.find();
+      const result = await WordSet.find(
+        name ? { name: { $regex: name, $options: "i" } } : {}
+      );
       return result.map((set) => new SetRecord(set.toObject()));
+      // if (!name) {
+      //   const result = await WordSet.find();
+      //   return result.map((set) => new SetRecord(set.toObject()));
+      // } else {
+      //   const result = await WordSet.find();
+      //   return result.map((set) => new SetRecord(set.toObject()));
+      // }
     } catch (e) {
       return null;
     }

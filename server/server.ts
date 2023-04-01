@@ -5,6 +5,7 @@ import { connectDB } from "./database/connections/mainDatabase";
 import rateLimit from "express-rate-limit";
 import { handleError } from "./errors/error";
 import { setRouter } from "./routers/sets.router";
+import { SetRecord } from "./records/sets";
 connectDB();
 
 const app = express();
@@ -24,9 +25,9 @@ app.use(
   })
 );
 
-// (async () => {
-//   console.log(await SetRecord.findAll());
-// })();
+(async () => {
+  console.log(await SetRecord.findAll(""));
+})();
 
 app.use("/set", setRouter);
 app.use(handleError);

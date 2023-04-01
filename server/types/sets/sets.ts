@@ -8,7 +8,7 @@ export interface ISetWithWords {
   _id?: string;
   name: string;
   description: string;
-  createdAt: string;
+  createdAt: Date;
   words: IWords[];
 }
 
