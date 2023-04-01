@@ -5,6 +5,7 @@ import { connectDB } from "./database/connections/mainDatabase";
 import rateLimit from "express-rate-limit";
 import { handleError } from "./errors/error";
 import { setRouter } from "./routers/sets.router";
+import { SetRecord } from "./records/sets";
 connectDB();
 
 const app = express();
@@ -23,6 +24,10 @@ app.use(
     max: 100, // Limit each IP to 100 requests per 'window' (here, per 5 minutes)
   })
 );
+
+(async () => {
+  console.log(await SetRecord.findAll());
+})();
 
 app.use("/set", setRouter);
 app.use(handleError);
