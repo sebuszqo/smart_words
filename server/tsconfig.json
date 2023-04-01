@@ -8,6 +8,7 @@
     "module": "CommonJS",
     "lib": ["es6"],
     "outDir": "dist",
+    "types": ["node", "mongoose"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "Node",
