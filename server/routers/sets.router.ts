@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import { SetRecord } from "../records/sets";
 
 export const setRouter = Router();
 
@@ -11,9 +12,10 @@ setRouter
     //@TODO
     //   This path is to get searched sets by name - if exists
   })
-  .get("/:id", (req: Request, res: Response) => {
-    // @TODO
-    //    This path is to get single sets of words when someone picked which set he/she want to learn
+  .get("/:id", async (req: Request, res: Response) => {
+    const id = req.params;
+    const set = await SetRecord.findOne(`${id}`);
+    res.json(set);
   })
   .post("/", (req: Request, res: Response) => {
     // @TODO
