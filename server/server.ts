@@ -4,6 +4,7 @@ import "express-async-errors";
 import { connectDB } from "./database/connections/mainDatabase";
 import rateLimit from "express-rate-limit";
 import { handleError } from "./errors/error";
+import { setRouter } from "./routers/sets.router";
 connectDB();
 
 const app = express();
@@ -23,28 +24,7 @@ app.use(
   })
 );
 
-// @TODO routers
-// tested db connection
-// async function run() {
-//   try {
-//     const set: ISetWithWords = {
-//       createdAt: new Date(),
-//       name: "test name",
-//       description: "test description",
-//       words: [
-//         { word: "word1", meaning: "meaning1" },
-//         { word: "word2", meaning: "meaning2" },
-//       ],
-//     };
-//     const createdSet = await WordSet.create(set);
-//     console.log(createdSet);
-//     await createdSet.save();
-//   } catch (e) {
-//     console.log("Error occurred", e.message);
-//   }
-// }
-// run();
-
+app.use("/set", setRouter);
 app.use(handleError);
 
 app.listen(3001, "0.0.0.0", () => {
