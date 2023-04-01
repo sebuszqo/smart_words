@@ -1,9 +1,9 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, DateSchemaDefinition } from "mongoose";
 import { ISetWithWords } from "../../types";
 
 const setSchema: Schema = new Schema<ISetWithWords>({
   name: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
+  createdAt: { type: Date },
   description: { type: String },
   words: [
     {
