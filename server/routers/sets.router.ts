@@ -9,10 +9,10 @@ setRouter
     const set = await SetRecord.findOne(`${id}`);
     res.json(set);
   })
-  .get("/search/:name?", (req: Request, res: Response) => {
-    //@TODO
-    //   This path is to get searched sets by name - if exists
-  })
+  // .get("/search/:name?", (req: Request, res: Response) => {
+  //   //@TODO
+  //   //   This path is to get searched sets by name - if exists
+  // })
 
   .get("/:name", async (req: Request, res: Response) => {
     const sets = await SetRecord.findAll(req.params.name);
