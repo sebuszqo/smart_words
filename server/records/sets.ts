@@ -73,10 +73,19 @@ export class SetRecord implements ISetWithWords {
       return null;
     }
   }
-  static async findAll(): Promise<SetRecord[] | null> {
+  static async findAll(name?: string): Promise<SetRecord[] | null> {
     try {
-      const result = await WordSet.find();
+      const result = await WordSet.find(
+        name ? { name: { $regex: name, $options: "i" } } : {}
+      );
       return result.map((set) => new SetRecord(set.toObject()));
+      // if (!name) {
+      //   const result = await WordSet.find();
+      //   return result.map((set) => new SetRecord(set.toObject()));
+      // } else {
+      //   const result = await WordSet.find();
+      //   return result.map((set) => new SetRecord(set.toObject()));
+      // }
     } catch (e) {
       return null;
     }
