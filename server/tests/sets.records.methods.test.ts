@@ -157,7 +157,6 @@ test("Throws ValidationError if a set with the same name already exists and has 
 test("Updates the set and returns a SetRecord instance", async () => {
   const setToInsert = new SetRecord(defaultSet);
   const set = await setToInsert.insert();
-  console.log(set);
   set.name = "Updated Set Test Name";
   set.description = "Updated Test Set Description";
   set.words = [
