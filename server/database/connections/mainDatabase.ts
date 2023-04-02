@@ -4,7 +4,6 @@ dotenv.config();
 
 export const connectDB = async (): Promise<mongoose.Connection> => {
   try {
-    console.log(process.env.MONGODB_URI);
     const connection = await mongoose.connect(process.env.MONGODB_URI, {
       dbName: "SmartWords",
       useNewUrlParser: true,

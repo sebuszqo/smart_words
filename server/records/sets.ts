@@ -1,7 +1,7 @@
 import { ISetWithWords, IWords } from "../types";
 import { ValidationError } from "../errors/error";
 import { WordSet } from "../database/models/wordsets";
-import { Document } from "mongoose";
+
 interface Word {
   word: string;
   meaning: string;
@@ -9,7 +9,7 @@ interface Word {
 }
 
 interface Set {
-  __v: number;
+  __v?: number;
   _id?: string;
   name: string;
   description: string;
@@ -53,6 +53,7 @@ export class SetRecord implements ISetWithWords {
       return null;
     }
   }
+
   static async findAll(name?: string): Promise<SetRecord[] | null> {
     try {
       const result = await WordSet.find(
@@ -69,5 +70,24 @@ export class SetRecord implements ISetWithWords {
     } catch (e) {
       return null;
     }
+  }
+
+  static async findByName(name: string): Promise<SetRecord | null> {
+    try {
+      const result = await WordSet.findOne({ name: name });
+      return result ? new SetRecord(result.toObject()) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async insert(): Promise<SetRecord | null> {
+    const existingSet = await SetRecord.findByName(this.name);
+    if (this._id || existingSet) {
+      throw new ValidationError("A set with this name or ID already exists");
+    }
+    const set = await WordSet.create(this);
+    const result = await set.save();
+    return new SetRecord(result.toObject());
   }
 }
