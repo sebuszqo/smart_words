@@ -14,14 +14,12 @@ afterAll(async () => {
 });
 
 const defaultSet = {
-  _id: "1234",
   name: "Test Set",
   description: "A test set",
   createdAt: new Date(),
   words: [
-    { _id: "1", word: "test", meaning: "A trial or experiment" },
+    { word: "test", meaning: "A trial or experiment" },
     {
-      _id: "2",
       word: "example",
       meaning:
         "A thing characteristic of its kind or illustrating a general rule.",
@@ -37,9 +35,8 @@ test("Can build AnnouncementRecord", () => {
   expect(set.name).toBe("Test Set");
   expect(set.description).toBe("A test set");
   expect(set.words).toEqual([
-    { _id: "1", word: "test", meaning: "A trial or experiment" },
+    { word: "test", meaning: "A trial or experiment" },
     {
-      _id: "2",
       word: "example",
       meaning:
         "A thing characteristic of its kind or illustrating a general rule.",

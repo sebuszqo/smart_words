@@ -1,7 +1,7 @@
 import { ISetWithWords, IWords } from "../types";
 import { ValidationError } from "../errors/error";
 import { WordSet } from "../database/models/wordsets";
-import { Document } from "mongoose";
+
 interface Word {
   word: string;
   meaning: string;
@@ -9,7 +9,7 @@ interface Word {
 }
 
 interface Set {
-  __v: number;
+  __v?: number;
   _id?: string;
   name: string;
   description: string;
@@ -53,6 +53,7 @@ export class SetRecord implements ISetWithWords {
       return null;
     }
   }
+
   static async findAll(name?: string): Promise<SetRecord[] | null> {
     try {
       const result = await WordSet.find(
@@ -69,5 +70,56 @@ export class SetRecord implements ISetWithWords {
     } catch (e) {
       return null;
     }
+  }
+
+  static async findByName(name: string): Promise<SetRecord | null> {
+    try {
+      const result = await WordSet.findOne({ name: name });
+      return result ? new SetRecord(result.toObject()) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static async delete(id: string): Promise<boolean> {
+    // const existingSet = await SetRecord.findOne(id);
+    if (!(await SetRecord.findOne(id))) {
+      throw new ValidationError("A set with this id does not exist.");
+    }
+    try {
+      const result = await WordSet.deleteOne({ _id: id });
+      return result.deletedCount !== 0;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async insert(): Promise<SetRecord | null> {
+    const existingSet = await SetRecord.findByName(this.name);
+    if (this._id || existingSet) {
+      throw new ValidationError("A set with this name or ID already exists");
+    }
+    try {
+      const set = await WordSet.create(this);
+      // const result = await set.save();
+      return new SetRecord(set.toObject());
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async update(): Promise<SetRecord | null> {
+    if (!this._id) {
+      throw new ValidationError("Set ID is required for updating.");
+    }
+    const existingSet = await SetRecord.findOne(this._id);
+    if (!existingSet) {
+      throw new ValidationError("A set with this id do not exist.");
+    }
+    const result = await WordSet.updateOne({ _id: this._id }, { $set: this });
+    if (result.modifiedCount === 0) {
+      throw new ValidationError("No set was updated.");
+    }
+    return new SetRecord(this);
   }
 }
