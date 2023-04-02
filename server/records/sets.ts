@@ -86,8 +86,27 @@ export class SetRecord implements ISetWithWords {
     if (this._id || existingSet) {
       throw new ValidationError("A set with this name or ID already exists");
     }
-    const set = await WordSet.create(this);
-    const result = await set.save();
-    return new SetRecord(result.toObject());
+    try {
+      const set = await WordSet.create(this);
+      const result = await set.save();
+      return new SetRecord(result.toObject());
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async update(): Promise<SetRecord | null> {
+    if (!this._id) {
+      throw new ValidationError("Set ID is required for updating.");
+    }
+    const existingSet = await SetRecord.findOne(this._id);
+    if (!existingSet) {
+      throw new ValidationError("A set with this id do not exist.");
+    }
+    const result = await WordSet.updateOne({ _id: this._id }, { $set: this });
+    if (result.modifiedCount === 0) {
+      throw new ValidationError("No set was updated.");
+    }
+    return new SetRecord(this);
   }
 }
