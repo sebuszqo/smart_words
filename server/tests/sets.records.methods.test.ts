@@ -132,7 +132,7 @@ test("Finding all sets with a non-existent name filter returns an empty array", 
   expect(sets).toHaveLength(0);
 });
 
-//.update()
+//.update() method tests
 test("Throws ValidationError if _id is not set", async () => {
   const set = new SetRecord({
     name: "Test Set",
@@ -184,4 +184,26 @@ test("Throws an error if no set was updated", async () => {
   const setToInsert = new SetRecord(defaultSet);
   const set = await setToInsert.insert();
   await expect(set.update()).rejects.toThrow("No set was updated.");
+});
+
+// .delete() method tests
+test("Deleting a set that exists returns true", async () => {
+  const set = new SetRecord(defaultSet);
+  const insertedSet = await set.insert();
+  const result = await SetRecord.delete(insertedSet._id);
+  expect(result).toBe(true);
+});
+
+test("Deleting a set that does not exist throws a validation error", async () => {
+  await expect(SetRecord.delete("nonexistentid")).rejects.toThrow(
+    ValidationError
+  );
+});
+
+test("Deleting a set removes it from the database", async () => {
+  const set = new SetRecord(defaultSet);
+  const insertedId = await set.insert();
+  await SetRecord.delete(insertedId._id);
+  const result = await SetRecord.findOne(insertedId._id);
+  expect(result).toBe(null);
 });
