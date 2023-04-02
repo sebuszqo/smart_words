@@ -82,8 +82,8 @@ export class SetRecord implements ISetWithWords {
   }
 
   static async delete(id: string): Promise<boolean> {
-    const existingSet = await SetRecord.findOne(id);
-    if (!existingSet) {
+    // const existingSet = await SetRecord.findOne(id);
+    if (!(await SetRecord.findOne(id))) {
       throw new ValidationError("A set with this id does not exist.");
     }
     try {
@@ -101,8 +101,8 @@ export class SetRecord implements ISetWithWords {
     }
     try {
       const set = await WordSet.create(this);
-      const result = await set.save();
-      return new SetRecord(result.toObject());
+      // const result = await set.save();
+      return new SetRecord(set.toObject());
     } catch (e) {
       return null;
     }
