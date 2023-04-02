@@ -19,9 +19,9 @@ setRouter
     res.json(sets);
   })
 
-  .post("/", (req: Request, res: Response) => {
-    // @TODO
-    //    This path is to add new objects - new sets of words to database
+  .post("/", async (req: Request, res: Response) => {
+    const set = new SetRecord(req.body);
+    await set.insert();
   })
   .put("/:id", (req: Request, res: Response) => {
     // @TODO
