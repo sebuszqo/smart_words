@@ -14,13 +14,17 @@ setRouter
     }
   })
   // .get("/search/:name?", (req: Request, res: Response) => {
-  //   //@TODO
   //   //   This path is to get searched sets by name - if exists
+  //  // Have been already made by .get with '/:name?'
   // })
 
-  .get("/:name", async (req: Request, res: Response) => {
+  .get("/:name?", async (req: Request, res: Response) => {
+    let name = req.params.name;
+    if (!name) {
+      name = "";
+    }
     try {
-      const sets = await SetRecord.findAll(req.params.name);
+      const sets = await SetRecord.findAll(name);
       res.json(sets);
     } catch (e) {
       res.status(500).json({ error: e.message });
