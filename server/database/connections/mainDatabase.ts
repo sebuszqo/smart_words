@@ -9,7 +9,7 @@ export const connectDB = async (): Promise<mongoose.Connection> => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     } as ConnectOptions);
-    console.log("Connected to MongoDB Atlas - SmartWords");
+    // console.log("Connected to MongoDB Atlas - SmartWords");
     return connection.connection;
   } catch (err) {
     console.error("Error connecting to MongoDB Atlas - SmartWords", err);
