@@ -1,25 +1,3 @@
-// Want to save this code to be used later
-// tested db connection
-// async function run() {
-//   try {
-//     const set: ISetWithWords = {
-//       createdAt: new Date(),
-//       name: "test name",
-//       description: "test description",
-//       words: [
-//         { word: "word1", meaning: "meaning1" },
-//         { word: "word2", meaning: "meaning2" },
-//       ],
-//     };
-//     const createdSet = await WordSet.create(set);
-//     console.log(createdSet);
-//     await createdSet.save();
-//   } catch (e) {
-//     console.log("Error occurred", e.message);
-//   }
-// }
-// run();
-
 import { ISetWithWords, IWords } from "../types";
 import { ValidationError } from "../errors/error";
 import { WordSet } from "../database/models/wordsets";
@@ -27,12 +5,12 @@ import { Document } from "mongoose";
 interface Word {
   word: string;
   meaning: string;
-  _id: string;
+  _id?: string;
 }
 
-interface Set extends Document {
+interface Set {
   __v: number;
-  _id: string;
+  _id?: string;
   name: string;
   description: string;
   createdAt: Date;
@@ -57,7 +35,8 @@ export class SetRecord implements ISetWithWords {
         throw new ValidationError("Description cannot be longer than 1000.");
       }
     }
-    if (!obj.words) {
+
+    if (obj.words.length === 0) {
       throw new ValidationError("your ser of words cannot be empty!");
     }
     this._id = obj._id;
