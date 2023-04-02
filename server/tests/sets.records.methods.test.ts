@@ -9,7 +9,7 @@ let connection: mongoose.Connection;
 
 beforeAll(async () => {
   connection = await connectDB();
-  await WordSet.deleteMany({ name: "Test Set" });
+  await WordSet.deleteMany({ name: { $regex: "Test", $options: "i" } });
 });
 
 afterAll(async () => {
@@ -17,12 +17,12 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
-  await WordSet.deleteMany({ name: "Test Set" });
+  await WordSet.deleteMany({ name: { $regex: "Test", $options: "i" } });
 });
 
 const defaultSet = {
   name: "Test Set",
-  description: "A test set",
+  description: "Test Set",
   createdAt: new Date(),
   words: [
     { word: "test", meaning: "A trial or experiment" },
@@ -77,9 +77,8 @@ test("Inserting a new set saves it to the database", async () => {
 });
 
 test("Inserting a new set with the same name as an existing set throws a ValidationError", async () => {
-  await WordSet.deleteMany({ name: "Existing Set" });
   const existingSet = new SetRecord({
-    name: "Existing Set",
+    name: "Test Set",
     description: "A test set",
     createdAt: new Date(),
     words: [
@@ -89,7 +88,7 @@ test("Inserting a new set with the same name as an existing set throws a Validat
   });
   await existingSet.insert();
   const newSet = new SetRecord({
-    name: "Existing Set",
+    name: "Test Set",
     description: "A test set",
     createdAt: new Date(),
     words: [
@@ -103,12 +102,16 @@ test("Inserting a new set with the same name as an existing set throws a Validat
 });
 
 test("Finding all sets returns an array of SetRecord instances", async () => {
+  const set = new SetRecord(defaultSet);
+  await set.insert();
   const sets = await SetRecord.findAll();
   expect(sets).toBeInstanceOf(Array);
   expect(sets[0]).toBeInstanceOf(SetRecord);
 });
 
 test("Finding all sets by searching '' - empty string - returns an array of SetRecord instances", async () => {
+  const set = new SetRecord(defaultSet);
+  await set.insert();
   const sets = await SetRecord.findAll("");
   expect(sets).toBeInstanceOf(Array);
   expect(sets[0]).toBeInstanceOf(SetRecord);
@@ -127,4 +130,58 @@ test("Finding all sets with a non-existent name filter returns an empty array", 
   const sets = await SetRecord.findAll("Non-existent name");
   expect(sets).toBeInstanceOf(Array);
   expect(sets).toHaveLength(0);
+});
+
+//.update()
+test("Throws ValidationError if _id is not set", async () => {
+  const set = new SetRecord({
+    name: "Test Set",
+    description: "A test set",
+    createdAt: new Date(),
+    words: [{ word: "apple", meaning: "fruit" }],
+  });
+  await expect(async () => await set.update()).rejects.toThrow(ValidationError);
+});
+
+test("Throws ValidationError if a set with the same name already exists and has a different _id", async () => {
+  const set1 = new SetRecord(defaultSet);
+  const set2 = new SetRecord(defaultSet);
+  await set1.insert();
+
+  set2._id = "123";
+  await expect(set2.update()).rejects.toThrow(
+    "A set with this id do not exist."
+  );
+});
+
+test("Updates the set and returns a SetRecord instance", async () => {
+  const setToInsert = new SetRecord(defaultSet);
+  const set = await setToInsert.insert();
+  console.log(set);
+  set.name = "Updated Set Test Name";
+  set.description = "Updated Test Set Description";
+  set.words = [
+    { word: "tree", meaning: "tree" },
+    { word: "black", meaning: "black" },
+  ];
+  const updatedSet = await set.update();
+  expect(updatedSet).toBeInstanceOf(SetRecord);
+  expect(updatedSet._id).toEqual(set._id);
+  expect(updatedSet.name).toEqual("Updated Set Test Name");
+  expect(updatedSet.description).toEqual("Updated Test Set Description");
+  expect(updatedSet.words).toEqual(set.words);
+});
+
+test("Throws an error if we trying to update set without id", async () => {
+  const set = new SetRecord(defaultSet);
+  set.name = "Updated Set Test Name";
+  await expect(set.update()).rejects.toThrow(
+    "Set ID is required for updating."
+  );
+});
+
+test("Throws an error if no set was updated", async () => {
+  const setToInsert = new SetRecord(defaultSet);
+  const set = await setToInsert.insert();
+  await expect(set.update()).rejects.toThrow("No set was updated.");
 });
