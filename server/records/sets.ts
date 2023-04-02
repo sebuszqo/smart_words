@@ -1,25 +1,3 @@
-// Want to save this code to be used later
-// tested db connection
-// async function run() {
-//   try {
-//     const set: ISetWithWords = {
-//       createdAt: new Date(),
-//       name: "test name",
-//       description: "test description",
-//       words: [
-//         { word: "word1", meaning: "meaning1" },
-//         { word: "word2", meaning: "meaning2" },
-//       ],
-//     };
-//     const createdSet = await WordSet.create(set);
-//     console.log(createdSet);
-//     await createdSet.save();
-//   } catch (e) {
-//     console.log("Error occurred", e.message);
-//   }
-// }
-// run();
-
 import { ISetWithWords, IWords } from "../types";
 import { ValidationError } from "../errors/error";
 import { WordSet } from "../database/models/wordsets";
@@ -27,11 +5,13 @@ import { Document } from "mongoose";
 interface Word {
   word: string;
   meaning: string;
-  _id: string;
+  _id?: string;
 }
 
-interface Set extends Document {
-  _id: string;
+backend-dev
+interface Set {
+  __v: number;
+  _id?: string;
   name: string;
   description: string;
   createdAt: Date;
@@ -55,7 +35,8 @@ export class SetRecord implements ISetWithWords {
         throw new ValidationError("Description cannot be longer than 1000.");
       }
     }
-    if (!obj.words) {
+
+    if (obj.words.length === 0) {
       throw new ValidationError("your ser of words cannot be empty!");
     }
     this._id = obj._id;
@@ -73,10 +54,19 @@ export class SetRecord implements ISetWithWords {
       return null;
     }
   }
-  static async findAll(): Promise<SetRecord[] | null> {
+  static async findAll(name?: string): Promise<SetRecord[] | null> {
     try {
-      const result = await WordSet.find();
+      const result = await WordSet.find(
+        name ? { name: { $regex: name, $options: "i" } } : {}
+      );
       return result.map((set) => new SetRecord(set.toObject()));
+      // if (!name) {
+      //   const result = await WordSet.find();
+      //   return result.map((set) => new SetRecord(set.toObject()));
+      // } else {
+      //   const result = await WordSet.find();
+      //   return result.map((set) => new SetRecord(set.toObject()));
+      // }
     } catch (e) {
       return null;
     }

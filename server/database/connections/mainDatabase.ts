@@ -1,18 +1,18 @@
-import mongoose, {ConnectOptions} from "mongoose";
+import mongoose, { ConnectOptions, Connection } from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
-
-export const connectDB = async (): Promise<void> => {
-    try {
-        await mongoose.connect(
-            "mongodb+srv://sebuszqo:kudsE4-qazcuk-quproz@cluster0.nvccqpd.mongodb.net/?retryWrites=true&w=majority",
-            {
-                dbName: "SmartWords",
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-            } as ConnectOptions
-        );
-        console.log("Connected to MongoDB Atlas - SmartWords");
-    } catch (err) {
-        console.error("Error connecting to MongoDB Atlas - SmartWords", err);
-    }
+export const connectDB = async (): Promise<mongoose.Connection> => {
+  try {
+    console.log(process.env.MONGODB_URI);
+    const connection = await mongoose.connect(process.env.MONGODB_URI, {
+      dbName: "SmartWords",
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    } as ConnectOptions);
+    console.log("Connected to MongoDB Atlas - SmartWords");
+    return connection.connection;
+  } catch (err) {
+    console.error("Error connecting to MongoDB Atlas - SmartWords", err);
+  }
 };

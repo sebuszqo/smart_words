@@ -1,7 +1,7 @@
 export interface IWords {
   word: string;
   meaning: string;
-  _id: string;
+  _id?: string;
 }
 
 export interface ISetWithWords {
