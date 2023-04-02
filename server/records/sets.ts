@@ -8,7 +8,6 @@ interface Word {
   _id?: string;
 }
 
-backend-dev
 interface Set {
   __v: number;
   _id?: string;
