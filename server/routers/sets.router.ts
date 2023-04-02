@@ -50,7 +50,11 @@ setRouter
       res.status(500).json({ error: e.message });
     }
   })
-  .delete("/:id", (req: Request, res: Response) => {
-    // @TODO
-    //    This path is to delete set of words
+  .delete("/:id", async (req: Request, res: Response) => {
+    try {
+      const result = await SetRecord.delete(req.params.id);
+      res.json(result);
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
   });
