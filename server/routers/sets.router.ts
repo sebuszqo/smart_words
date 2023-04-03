@@ -4,10 +4,23 @@ import { SetRecord } from "../records/sets";
 export const setRouter = Router();
 
 setRouter
+  // to find sets that includes this name, and to get all the sets available
+  .get("/search/:name?", async (req: Request, res: Response) => {
+    let name = req.params.name;
+    if (!name) {
+      name = " ";
+    }
+    try {
+      const sets = await SetRecord.findAll(name);
+      res.json(sets);
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  })
+  //  To get single set
   .get("/:id", async (req: Request, res: Response) => {
     try {
-      const id = req.params;
-      const set = await SetRecord.findOne(`${id}`);
+      const set = await SetRecord.findOne(`${req.params.id}`);
       res.json(set);
     } catch (e) {
       res.status(500).json({ error: e.message });
@@ -17,19 +30,6 @@ setRouter
   //   //   This path is to get searched sets by name - if exists
   //  // Have been already made by .get with '/:name?'
   // })
-
-  .get("/:name?", async (req: Request, res: Response) => {
-    let name = req.params.name;
-    if (!name) {
-      name = "";
-    }
-    try {
-      const sets = await SetRecord.findAll(name);
-      res.json(sets);
-    } catch (e) {
-      res.status(500).json({ error: e.message });
-    }
-  })
 
   .post("/", async (req: Request, res: Response) => {
     try {
@@ -41,13 +41,20 @@ setRouter
     }
   })
 
-  .put("/:id?", async (req: Request, res: Response) => {
+  .put("/:id", async (req: Request, res: Response) => {
     try {
       const setToUpdate = await SetRecord.findOne(req.params.id);
       const { name, description, words } = req.body;
-      setToUpdate.description = description;
-      setToUpdate.name = name;
-      setToUpdate.words = words;
+
+      if (name) {
+        setToUpdate.name = name;
+      }
+      if (description) {
+        setToUpdate.description = description;
+      }
+      if (words) {
+        setToUpdate.words = words;
+      }
       const result = await setToUpdate.update();
       res.json(result);
     } catch (e) {
