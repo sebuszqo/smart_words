@@ -1,42 +1,112 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #002d72;
+    color: #fff;
+    padding: 20px;
+    height: 80px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/*body {*/
+/*  background-color: #0a2d5d;*/
+/*}*/
+
+header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+#search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    height: 40px;
+    border-radius: 20px;
+    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 32%;
+}
+
+#search-bar input[type="text"] {
+    border: none;
+    background-color: #fff;
+    font-size: 16px;
+    width: 80%;
+    margin-right: 25px;
+    outline: none;
+}
+
+
+#search-bar input[type="submit"] {
+    background-color: #002d72;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    padding: 7px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.add-new-set {
+    background-color: #fff;
+    color: #002d72;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 30px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+    margin: 80px 150px;
+    gap: 20px
 }
 
 .card {
-  padding: 2em;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.1);
+    width: 25%;
+    height: 120px;
+    margin-bottom: 60px;
+    padding: 20px;
+    text-align: center;
+    transition: box-shadow 0.3s ease-in-out;
 }
 
-.read-the-docs {
-  color: #888;
+.card:hover {
+    box-shadow: 3px 7px 25px rgba(0, 0, 0, 0.4);
+    /*border: 1px solid #002d72;*/
 }
+
+.card h2 {
+    color: #002d72;
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 16px;
+    margin: 0;
+}
+
