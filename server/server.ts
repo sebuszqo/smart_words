@@ -2,7 +2,6 @@ import express, { json } from "express";
 import cors from "cors";
 import "express-async-errors";
 import { connectDB } from "./database/connections/mainDatabase";
-import rateLimit from "express-rate-limit";
 import { handleError } from "./errors/error";
 import { setRouter } from "./routers/sets.router";
 import { logMiddleware } from "./middleware/log.middleware";
@@ -23,12 +22,12 @@ app.use(
 
 app.use(json());
 
-app.use(
-  rateLimit({
-    windowMs: 5 * 60 * 1000, // 5 minutes
-    max: 100, // Limit each IP to 100 requests per 'window' (here, per 5 minutes)
-  })
-);
+// app.use(
+//   rateLimit({
+//     windowMs: 5 * 60 * 1000, // 5 minutes
+//     max: 100, // Limit each IP to 100 requests per 'window' (here, per 5 minutes)
+//   })
+// );
 
 // (async () => {
 //   console.log(await SetRecord.findAll(""));
