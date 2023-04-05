@@ -29,8 +29,9 @@ export function App() {
 
   useEffect(() => {
     (async () => {
+      // console.log(searchBar);
       const response = await fetch(
-        `http://localhost:3001/set/search/?name=${searchBar}`
+        `http://localhost:3001/set/search/${searchBar}`
       );
       const sets = await response.json();
       console.log(sets);
