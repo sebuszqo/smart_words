@@ -1,34 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '../public/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+export function App() {
+  const [placeholderText, setPlaceholderText] = useState("");
+
+  useEffect(() => {
+    const textToWrite = "Search for your set!";
+    let index = 0;
+    let textLength = textToWrite.length;
+    const intervalId = setInterval(() => {
+      if (index === textLength - 1) {
+        clearInterval(intervalId);
+      } else {
+        setPlaceholderText((prevText) => prevText + textToWrite[index]);
+        index++;
+      }
+    }, 100);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <h1>SmartWords</h1>
+        <div id="search-bar">
+          <input type="text" id="text-to-write" placeholder={placeholderText} />
+          <input type="submit" value="SEARCH" />
+        </div>
+        <button className="add-new-set">ADD new set</button>
+      </header>
+      <main>
+        <div className="card-container">
+          <div className="card">
+            <h2>Card 1</h2>
+            <p>Description of Card 1 lorem</p>
+          </div>
+          <div className="card">
+            <h2>Card 2</h2>
+            <p>Description of Card 2</p>
+          </div>
+          <div className="card">
+            <h2>Card 3</h2>
+            <p>Description of Card 3</p>
+          </div>
+          <div className="card">
+            <h2>Card 4</h2>
+            <p>Description of Card 4</p>
+          </div>
+          <div className="card">
+            <h2>Card 5</h2>
+            <p>Description of Card 5</p>
+          </div>
+          <div className="card">
+            <h2>Card 6</h2>
+            <p>Description of Card 6</p>
+          </div>
+          <div className="card">
+            <h2>Card 7</h2>
+            <p>Description of Card 6</p>
+          </div>
+        </div>
+      </main>
     </div>
-  )
+  );
 }
-
-export default App
