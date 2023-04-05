@@ -8,10 +8,11 @@ setRouter
   .get("/search/:name?", async (req: Request, res: Response) => {
     let name = req.params.name;
     if (!name) {
-      name = " ";
+      name = "";
     }
     try {
       const sets = await SetRecord.findAll(name);
+      console.log(sets);
       res.json(sets);
     } catch (e) {
       res.status(500).json({ error: e.message });
