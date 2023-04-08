@@ -1,0 +1,95 @@
+.carded {
+    height: 100%;
+    width: 100%;
+
+    transform-style: preserve-3d;
+    position: relative;
+
+    border-radius: 5px;
+    border: 1px solid blue;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.75);
+
+    /*transition: transform 1000ms;*/
+}
+
+/*.carded:hover {*/
+/*    transform: rotateY(180deg);*/
+/*}*/
+
+.card-front, .card-back {
+    height: 100%;
+    width: 100%;
+
+    position: absolute;
+
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 200;
+    color: #002d72;
+    font-size: 30px;
+}
+
+.carded p {
+    padding: 0 20px;
+    text-align: center;
+    overflow: auto;
+}
+
+.card-front {
+    border: 1px solid #002d72;
+}
+
+.card-back {
+    border: 1px solid #002d72;
+    transform: rotateX(180deg);
+}
+
+
+.flip-exit {
+    transform: rotateX(0deg);
+}
+
+.flip-exit-active {
+    transform: rotateX(180deg);
+    transition: transform 300ms;
+    transition-timing-function: ease-in-out;
+
+}
+
+.flip-exit-done {
+    transform: rotateX(180deg);
+}
+
+.flip-enter {
+    transform: rotateX(180deg);
+}
+
+.flip-enter-active {
+    transform: rotateX(0deg);
+    transition: transform 300ms;
+    transition-timing-function: ease-in-out;
+
+    /*transition-timing-function: cubic-bezier(.57, .21, .69, 1.25);*/
+}
+
+.flip-enter-done {
+    transform: rotateX(0deg);
+}
+
+.arrow-left {
+    font-size: 200%;
+    position: absolute;
+    top: 50%;
+    left: -15%;
+}
+
+.arrow-right {
+    font-size: 200%;
+    position: absolute;
+    top: 50%;
+    left: 110%;
+}

@@ -1,0 +1,24 @@
+.cardApp {
+    width: 100vw;
+    height: 50vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nameContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.nameContainer h2 {
+    color: #083a88;
+    font-size: 23px;
+    font-weight: 700;
+    padding-top: 20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+
