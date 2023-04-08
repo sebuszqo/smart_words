@@ -1,5 +1,5 @@
 .carded {
-    height: 100%;
+    height: 80%;
     width: 100%;
 
     transform-style: preserve-3d;
@@ -24,7 +24,7 @@
 
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-
+    overflow: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,6 +82,7 @@
 
 .arrow-left {
     font-size: 200%;
+    cursor: pointer;
     position: absolute;
     top: 50%;
     left: -15%;
@@ -89,7 +90,22 @@
 
 .arrow-right {
     font-size: 200%;
+    cursor: pointer;
     position: absolute;
     top: 50%;
     left: 110%;
+}
+
+@media screen and (min-width: 300px) {
+    .arrow-right, .arrow-left {
+        top: 40%;
+    }
+
+    .card-front p {
+        font-size: 20px;
+    }
+
+    .card-back p {
+        font-size: 20px;
+    }
 }

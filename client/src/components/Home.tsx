@@ -30,6 +30,7 @@ export function Home() {
   }, []);
 
   function handleDeleteButtonClick(event: any) {
+    event.preventDefault();
     (async () => {
       const response = await fetch(
         `http://localhost:3001/set/${event.target.value}`,
@@ -69,7 +70,9 @@ export function Home() {
             onChange={(e) => setSearchBar(e.target.value)}
           />
         </div>
-        <button className="add-new-set">ADD new set</button>
+        <Link to={"/create-set"}>
+          <button className="add-new-set">ADD new set</button>
+        </Link>
       </header>
       <main>
         <div className="card-container">
@@ -83,7 +86,7 @@ export function Home() {
                   className="delete-card-button"
                   aria-label="Delete Card"
                   type={"button"}
-                  onClick={handleDeleteButtonClick}
+                  onClick={(e) => handleDeleteButtonClick(e)}
                 >
                   🗑️
                 </button>

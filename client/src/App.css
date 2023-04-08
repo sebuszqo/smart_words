@@ -149,3 +149,47 @@ header h1 {
 .card h2::-webkit-scrollbar {
     display: none;
 }
+
+
+@media only screen and (max-width: 768px) {
+    header {
+        flex-direction: column;
+        height: auto;
+    }
+
+    #search-bar {
+        width: 80%;
+    }
+
+    #search-bar input[type="text"] {
+        margin-right: 10px;
+        width: 70%;
+    }
+
+    .add-new-set {
+        margin-right: 0;
+        margin-top: 20px;
+    }
+
+    .card-container {
+        margin: 50px 10px;
+    }
+
+    .card {
+        width: 100%;
+        height: auto;
+        margin-bottom: 40px;
+    }
+
+    .card h2 {
+        font-size: 20px;
+        max-width: 100%;
+    }
+
+    .card-body {
+        height: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+        overflow-y: visible;
+    }
+}

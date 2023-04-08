@@ -18,7 +18,7 @@ interface Word {
 }
 
 export function SetDetails() {
-  const { id } = useParams(); // Pobiera ID seta z URL
+  const { id } = useParams();
   const [set, setSet] = useState<Set | null>(null); // Stan przechowujący dane seta
 
   useEffect(() => {
@@ -33,10 +33,6 @@ export function SetDetails() {
     })();
   }, [id]);
 
-  if (!set) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <>
       <header>
@@ -47,14 +43,20 @@ export function SetDetails() {
           Return to sets
         </Link>
       </header>
-      <div className={"nameContainer"}>
-        <h2>
-          <span>{set.name}</span>
-        </h2>
-      </div>
-      <div className="cardApp">
-        <FlippableCardContainer set={set} />
-      </div>
+      {!set ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <div className={"nameContainer"}>
+            <h2>
+              <span>{set.name}</span>
+            </h2>
+          </div>
+          <div className="cardApp">
+            <FlippableCardContainer set={set} />
+          </div>
+        </>
+      )}
       {/*<div className={`card ${isFlipped ? "flip" : ""}`} onClick={handleFlip}>*/}
       {/*  {isFlipped ? (*/}
       {/*    <span className={"front"}>{set.words[index].word}</span>*/}

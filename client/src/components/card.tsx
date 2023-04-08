@@ -52,7 +52,7 @@ export function Card(props: Props) {
           <p>{props.set.words[index].word}</p>
         </div>
       </div>
-      <p>
+      <p className={"stats"}>
         Words: {props.set.words.length} | Current Word: {index} | Words to End:{" "}
         {props.set.words.length - index}
       </p>
