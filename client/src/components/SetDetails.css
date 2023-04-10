@@ -1,7 +1,7 @@
 .cardApp {
     width: 100vw;
     height: 50vh;
-
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
