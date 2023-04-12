@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import "../App.css";
 import { Link } from "react-router-dom";
-import { SearchBar } from "./Search";
+import { SearchBar } from "./SearchBar";
 import { HomeCards } from "./HomeCards";
 
 interface Set {
