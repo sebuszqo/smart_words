@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "./styles/CreateSetForm.css";
+import "../styles/CreateSetForm.css";
 import { Link, useNavigate } from "react-router-dom";
 
 interface Word {
