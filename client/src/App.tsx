@@ -3,7 +3,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./components/home-layout/Home";
-import { SetDetails } from "./components/SetDetails";
+import { SetDetails } from "./components/detailsOfCards-layout/SetDetails";
 import { AddSetForm } from "./components/createNewSet-layout/CreateSetForm";
 
 export function App() {

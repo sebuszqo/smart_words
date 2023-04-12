@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./styles/card.css";
+import "../styles/card.css";
 
 interface Props {
   onClick: () => void;

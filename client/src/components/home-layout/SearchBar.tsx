@@ -9,7 +9,7 @@ export function SearchBar(props: Props) {
   const [placeholderText, setPlaceholderText] = useState("");
 
   useEffect(() => {
-    const textToWrite = "Seaarch for your set!";
+    const textToWrite = "Seearch for your set!";
     let index = 0;
     let textLength = textToWrite.length;
     const intervalId = setInterval(() => {
