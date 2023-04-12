@@ -158,12 +158,12 @@ header h1 {
     }
 
     #search-bar {
-        width: 80%;
+        margin-top: 10px;
+        width: 60%;
     }
 
     #search-bar input[type="text"] {
-        margin-right: 10px;
-        width: 70%;
+        width: 80%;
     }
 
     .add-new-set {
