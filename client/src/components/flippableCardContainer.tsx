@@ -1,5 +1,5 @@
-import "./flippableCardContainer.css";
-import { Card } from "./card";
+import "./styles/flippableCardContainer.css";
+import { SingleCard } from "./SingleCard";
 import { CSSTransition } from "react-transition-group";
 import { useState } from "react";
 
@@ -26,7 +26,7 @@ export function FlippableCardContainer(props: Props) {
   return (
     <div className="flippable-card-container">
       <CSSTransition in={showFront} timeout={300} classNames={"flip"}>
-        <Card
+        <SingleCard
           set={props.set}
           onClick={() => {
             setShowFront((value) => !value);

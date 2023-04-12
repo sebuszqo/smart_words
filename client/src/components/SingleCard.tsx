@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./card.css";
+import "./styles/card.css";
 
 interface Props {
   onClick: () => void;
@@ -20,7 +20,7 @@ interface Word {
   meaning: string;
 }
 
-export function Card(props: Props) {
+export function SingleCard(props: Props) {
   const [index, setIndex] = useState(0); // Stan przechowujący indeks wyświetlanego słowa
   function handleLeftArrow() {
     setIndex((prevIndex) =>

@@ -41,7 +41,7 @@ export function HomeCards(props: Props) {
             <button
               value={obj._id}
               className="delete-card-button"
-              aria-label="Delete Card"
+              aria-label="Delete SingleCard"
               type={"button"}
               onClick={(e) => handleDeleteButtonClick(e)}
             >
