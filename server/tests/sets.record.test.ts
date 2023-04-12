@@ -1,17 +1,5 @@
 import { SetRecord } from "../records/sets";
-import { connectDB } from "../database/connections/mainDatabase";
-import mongoose from "mongoose";
 import { ValidationError } from "../errors/error";
-
-let connection: mongoose.Connection;
-
-beforeAll(async () => {
-  connection = await connectDB();
-});
-
-afterAll(async () => {
-  await connection.close();
-});
 
 const defaultSet = {
   name: "Test Set",
