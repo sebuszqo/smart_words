@@ -25,7 +25,7 @@
 
 ## About The Project
 
-![GifFile](https://github.com/sebuszqo/map_market_project/blob/main/mapmarket-gif.gif)
+![GifFile](https://github.com/sebuszqo/)
 
 ## Built With
 
