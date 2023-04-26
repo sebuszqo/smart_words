@@ -25,7 +25,7 @@
 
 ## About The Project
 
-###Short video showcasing the current state of my application
+### Short video showcasing the current state of my application
 
 https://user-images.githubusercontent.com/92787334/234638331-471d11fa-078c-40eb-838c-80782528c6af.mov
 
